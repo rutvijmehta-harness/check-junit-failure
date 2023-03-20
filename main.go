@@ -3,12 +3,12 @@ package main
 import (
 	"errors"
 	"fmt"
-	"github.com/mattn/go-zglob"
 	"os"
 	"path/filepath"
 	"strings"
 
-	"github.com/harness/lite-engine/ti/report/parser/junit/gojunit"
+	"github.com/mattn/go-zglob"
+	"github.com/rutvijmehta-harness/check-junit-failure/gojunit"
 	"github.com/sirupsen/logrus"
 )
 
@@ -16,7 +16,7 @@ const (
 	globEnv = "PLUGIN_JUNIT_PATH"
 )
 
-// ParseTests parses XMLs and writes relevant data to the channel
+// ParseTests parses XMLs and returns error if there are any failures
 func ParseTests(paths []string, log *logrus.Logger) error {
 	files := getFiles(paths, log)
 
@@ -43,7 +43,7 @@ func ParseTests(paths []string, log *logrus.Logger) error {
 	return nil
 }
 
-// getFiles returns uniques file paths providePLUGIN_JUNIT_PATHd in the input after expanding the input paths
+// getFiles returns uniques file paths provided in the input after expanding the input paths
 func getFiles(paths []string, log *logrus.Logger) []string {
 	var files []string
 	for _, p := range paths {
